@@ -6,7 +6,8 @@
     "dev": "bun run src/index.ts"
   },
   "dependencies": {
-    "commander": "^15.0.0"
+    "commander": "^15.0.0",
+    "@messagekit/core": "workspace:*"
   },
   "devDependencies": {
     "@types/node": "^26.1.2"
