@@ -1,0 +1,13 @@
+{
+  "name": "@messagekit/core",
+  "private": true,
+  "type": "module",
+  "version": "0.0.0",
+  "exports": {
+    ".": "./src/index.ts",
+    "./schema": "./src/schema.ts"
+  },
+  "dependencies": {
+    "zod": "^4.4.3"
+  }
+}

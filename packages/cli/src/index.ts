@@ -1,12 +1,5 @@
 import { Command } from "commander";
-
-type TelegramResponse = {
-  ok: boolean;
-  result?: {
-    message_id?: number;
-  };
-  description?: string;
-};
+import { sendTelegramMessage } from "@messagekit/core";
 
 const program = new Command();
 
@@ -36,31 +29,19 @@ program
       process.exit(1);
     }
 
-    const response = await fetch(
-      `https://api.telegram.org/bot${botToken}/sendMessage`,
-      {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          chat_id: chatId,
-          text: message,
-        }),
-      },
-    );
-    const data = (await response.json()) as TelegramResponse;
-    if (!response.ok || !data.ok) {
-      const errorMessage = data.description || response.statusText;
-      console.error("Telegram API request failed: ", errorMessage);
+    try {
+      const result = await sendTelegramMessage({
+        botToken,
+        chatId,
+        message,
+      });
+
+      console.log("Sent Telegram message to chat id: ", result.chatId);
+      console.log("Telegram message id: ", result.messageId);
+    } catch (error) {
+      const message = error instanceof Error ? error.message : String(error);
+      console.error("Failed to send Telegram message:", message);
       process.exit(1);
-    }
-
-    const messageId = data.result?.message_id;
-    console.log("Send message successfully. Chat ID:", chatId);
-
-    if (messageId !== undefined) {
-      console.log("Telegram Message ID:", messageId);
     }
   });
 
