@@ -2,11 +2,43 @@ import {
   McpServer,
   WebStandardStreamableHTTPServerTransport,
 } from "@modelcontextprotocol/server";
-import { Hono } from "hono";
+import { Hono, type Context } from "hono";
+import { createClerkClient } from "@clerk/backend";
+import { generateClerkProtectedResourceMetadata } from "@clerk/mcp-tools/server";
 import {
   telegramMessageInputSchema,
   sendTelegramMessage,
 } from "@messagekit/core";
+
+const clerkPublishableKey = process.env.CLERK_PUBLISHABLE_KEY;
+const clerkSecretKey = process.env.CLERK_SECRET_KEY;
+
+if (!clerkPublishableKey) {
+  throw new Error("CLERK_PUBLISHABLE_KEY environment variable is required.");
+}
+if (!clerkSecretKey) {
+  throw new Error("CLERK_SECRET_KEY environment variable is required.");
+}
+
+const clerkClient = createClerkClient({
+  publishableKey: clerkPublishableKey,
+  secretKey: clerkSecretKey,
+});
+
+function protectedResourceMetadataUrl(c: Context, botToken: string) {
+  return new URL(
+    `.well-known/oauth-protected-resource/${botToken}/mcp`,
+    c.req.url,
+  ).toString();
+}
+
+function unauthorizedMcpResponse(c: Context, botToken: string) {
+  c.header(
+    "WWW-Authenticate",
+    `Bearer resource_metadata="${protectedResourceMetadataUrl(c, botToken)}"`,
+  );
+  return c.json({ error: "Unauthorized" }, 401);
+}
 
 function createMCPServer(botToken: string) {
   const server = new McpServer({ name: "messagekit", version: "0.0.0" });
@@ -41,10 +73,40 @@ function createMCPServer(botToken: string) {
 
 const app = new Hono();
 
+app.get(".well-known/oauth-protected-resource/:botToken/mcp", (c) => {
+  return c.json(
+    generateClerkProtectedResourceMetadata({
+      publishableKey: clerkPublishableKey,
+      resourceUrl: new URL(
+        `/${c.req.param("botToken")}/mcp`,
+        c.req.url,
+      ).toString(),
+    }),
+  );
+});
+
 app.notFound((c) => c.json({ message: "Not Found" }, 404));
 
 app.post("/:botToken/mcp", async (c) => {
   const botToken = c.req.param("botToken");
+  const authorization = c.req.header("Authorization");
+
+  if (!authorization?.startsWith("Bearer ")) {
+    return unauthorizedMcpResponse(c, botToken);
+  }
+
+  try {
+    const requestState = await clerkClient.authenticateRequest(c.req.raw, {
+      acceptsToken: "oauth_token",
+    });
+
+    if (!requestState.isAuthenticated) {
+      return unauthorizedMcpResponse(c, botToken);
+    }
+  } catch {
+    return unauthorizedMcpResponse(c, botToken);
+  }
+
   const server = createMCPServer(botToken);
 
   const transport = new WebStandardStreamableHTTPServerTransport({
@@ -65,5 +127,10 @@ const portNumber = Number(process.env.PORT ?? 3000);
 
 export default {
   port: portNumber,
-  fetch: app.fetch,
+  fetch: (req: Request) => {
+    const url = new URL(req.url);
+    url.protocol = req.headers.get("x-forwaded-proto") ?? url.protocol;
+    url.host = req.headers.get("x-forwaded-host") ?? url.host;
+    return app.fetch(new Request(url, req));
+  },
 };
