@@ -1,13 +1,13 @@
 {
   "name": "@messagekit/remote-mcp",
   "version": "0.0.0",
-  "type": "module",
   "private": true,
-  "scripts": {
-    "start": "bun run src/index.ts"
-  },
+  "type": "module",
   "exports": {
     ".": "./src/index.ts"
+  },
+  "scripts": {
+    "start": "bun run src/index.ts"
   },
   "dependencies": {
     "@clerk/backend": "^3.16.1",
