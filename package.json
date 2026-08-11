@@ -1,17 +1,25 @@
 {
   "name": "messagekit",
   "version": "1.0.0",
-  "devDependencies": {
-    "@types/node": "^26.1.1"
-  },
   "private": true,
-  "scripts": {
-    "dev:cli": "bun run packages/cli/src/index.ts",
-    "dev:local-mcp": "bun run packages/local-mcp/src/index.ts",
-    "dev:remote-mcp": "bun run apps/remote-mcp/src/index.ts"
-  },
   "workspaces": [
     "packages/*",
     "apps/*"
-  ]
+  ],
+  "scripts": {
+    "dev:cli": "bun run packages/cli/src/index.ts",
+    "dev:local-mcp": "bun run packages/local-mcp/src/index.ts",
+    "dev:remote-mcp": "bun run apps/remote-mcp/src/index.ts",
+    "typecheck": "tsc --noEmit",
+    "lint": "oxlint",
+    "lint:fix": "oxlint --fix",
+    "fmt": "oxfmt",
+    "fmt:check": "oxfmt --check"
+  },
+  "devDependencies": {
+    "@types/node": "^26.2.0",
+    "oxfmt": "^0.63.0",
+    "oxlint": "^1.78.0",
+    "typescript": "^7.0.2"
+  }
 }

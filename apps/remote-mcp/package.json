@@ -1,8 +1,11 @@
 {
   "name": "@messagekit/remote-mcp",
   "version": "0.0.0",
-  "type": "module",
   "private": true,
+  "type": "module",
+  "exports": {
+    ".": "./src/index.ts"
+  },
   "scripts": {
     "start": "bun run src/index.ts"
   },
@@ -12,8 +15,5 @@
     "@messagekit/core": "workspace:*",
     "@modelcontextprotocol/server": "^2.0.0",
     "hono": "^4.12.34"
-  },
-  "devDependencies": {
-    "@types/node": "^26.1.2"
   }
 }
