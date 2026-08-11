@@ -5,12 +5,12 @@
   "scripts": {
     "dev": "bun run src/index.ts"
   },
+  "exports": {
+    ".": "./src/index.ts"
+  },
   "dependencies": {
     "@messagekit/core": "workspace:*",
     "commander": "^15.0.0",
     "zod": "^4.4.3"
-  },
-  "devDependencies": {
-    "@types/node": "^26.1.2"
   }
 }
