@@ -10,6 +10,9 @@
     "dev:cli": "bun run packages/cli/src/index.ts",
     "dev:local-mcp": "bun run packages/local-mcp/src/index.ts",
     "dev:remote-mcp": "bun run apps/remote-mcp/src/index.ts",
+    "build:core": "bun run --filter=@munnamodi-dev/core build",
+    "build:cli": "bun run --filter=@munnamodi-dev/cli build",
+    "build:local-mcp": "bun run --filter=@munnamodi-dev/local-mcp build",
     "typecheck": "tsc --noEmit",
     "lint": "oxlint",
     "lint:fix": "oxlint --fix",
@@ -20,6 +23,7 @@
     "@types/node": "^26.2.0",
     "oxfmt": "^0.63.0",
     "oxlint": "^1.78.0",
+    "tsdown": "^0.22.14",
     "typescript": "^7.0.2"
   }
 }

@@ -1,15 +1,16 @@
 {
-  "name": "@messagekit/cli",
+  "name": "@munnamodi-dev/cli",
   "version": "0.0.0",
   "type": "module",
   "exports": {
     ".": "./src/index.ts"
   },
   "scripts": {
-    "dev": "bun run src/index.ts"
+    "dev": "bun run src/index.ts",
+    "build": "tsdown"
   },
   "dependencies": {
-    "@messagekit/core": "workspace:*",
+    "@munnamodi-dev/core": "workspace:*",
     "commander": "^15.0.0",
     "zod": "^4.4.3"
   }

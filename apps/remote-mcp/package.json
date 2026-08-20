@@ -12,7 +12,7 @@
   "dependencies": {
     "@clerk/backend": "^3.16.1",
     "@clerk/mcp-tools": "^0.6.0",
-    "@messagekit/core": "workspace:*",
+    "@munnamodi-dev/core": "workspace:*",
     "@modelcontextprotocol/server": "^2.0.0",
     "hono": "^4.12.34"
   }

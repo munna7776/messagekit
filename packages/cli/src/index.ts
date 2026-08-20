@@ -3,7 +3,7 @@ import { z, ZodError } from "zod";
 import { dirname, join } from "node:path";
 import { homedir } from "node:os";
 import { existsSync, mkdirSync, readFileSync, writeFileSync } from "node:fs";
-import { sendTelegramMessage } from "@messagekit/core";
+import { sendTelegramMessage } from "@munnamodi-dev/core";
 
 const cliConfigSchema = z.object({
   telegramBotToken: z.string().min(1).optional(),
@@ -13,9 +13,13 @@ const configPath = join(homedir(), ".config", "messagekit", "config.json");
 
 function writeTelegramBotToken(telegramBotToken: string) {
   mkdirSync(dirname(configPath), { recursive: true });
-  writeFileSync(configPath, `${JSON.stringify({ telegramBotToken }, null, 2)}\n`, {
-    mode: 0o600,
-  });
+  writeFileSync(
+    configPath,
+    `${JSON.stringify({ telegramBotToken }, null, 2)}\n`,
+    {
+      mode: 0o600,
+    },
+  );
 }
 
 function getTelegramBotToken() {
@@ -23,7 +27,9 @@ function getTelegramBotToken() {
     throw new Error("Telegram bot token is required. Run `messagekit init`");
   }
 
-  const config = cliConfigSchema.parse(JSON.parse(readFileSync(configPath, "utf-8")));
+  const config = cliConfigSchema.parse(
+    JSON.parse(readFileSync(configPath, "utf-8")),
+  );
 
   const token = config.telegramBotToken;
   if (!token) {
