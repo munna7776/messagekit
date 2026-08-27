@@ -1,18 +1,14 @@
+#!/usr/bin/env node
 import { McpServer } from "@modelcontextprotocol/server";
 import { StdioServerTransport } from "@modelcontextprotocol/server/stdio";
-import {
-  telegramMessageInputSchema,
-  sendTelegramMessage,
-} from "@munnamodi-dev/core";
+import { telegramMessageInputSchema, sendTelegramMessage } from "@munnamodi-dev/core";
 
 const server = new McpServer({ name: "messagekit", version: "0.0.0" });
 
 function getBotToken(): string {
   const botToken = process.env.TELEGRAM_BOT_TOKEN;
   if (!botToken) {
-    throw new Error(
-      "TELEGRAM_BOT_TOKEN is not set in the MCP environment variables.",
-    );
+    throw new Error("TELEGRAM_BOT_TOKEN is not set in the MCP environment variables.");
   }
   return botToken;
 }

@@ -7,17 +7,20 @@
     "apps/*"
   ],
   "scripts": {
-    "dev:cli": "bun run packages/cli/src/index.ts",
-    "dev:local-mcp": "bun run packages/local-mcp/src/index.ts",
-    "dev:remote-mcp": "bun run apps/remote-mcp/src/index.ts",
     "build:core": "bun run --filter=@munnamodi-dev/core build",
     "build:cli": "bun run --filter=@munnamodi-dev/cli build",
     "build:local-mcp": "bun run --filter=@munnamodi-dev/local-mcp build",
-    "typecheck": "tsc --noEmit",
+    "dev:cli": "bun run packages/cli/src/index.ts",
+    "dev:local-mcp": "bun run packages/local-mcp/src/index.ts",
+    "dev:remote-mcp": "bun run apps/remote-mcp/src/index.ts",
+    "fmt": "oxfmt",
+    "fmt:check": "oxfmt . --check",
     "lint": "oxlint",
     "lint:fix": "oxlint --fix",
-    "fmt": "oxfmt",
-    "fmt:check": "oxfmt --check"
+    "release:pack:core": "bun run --filter=@munnamodi-dev/core pack:dry",
+    "release:pack:cli": "bun run --filter=@munnamodi-dev/messagekit pack:dry",
+    "release:pack:local-mcp": "bun run --filter=@munnamodi-dev/messagekit-mcp pack:dry",
+    "typecheck": "tsc --noEmit"
   },
   "devDependencies": {
     "@types/node": "^26.2.0",

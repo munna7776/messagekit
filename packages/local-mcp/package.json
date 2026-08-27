@@ -1,17 +1,33 @@
 {
-  "name": "@munnamodi-dev/local-mcp",
+  "name": "@munnamodi-dev/messagekit-mcp",
   "version": "0.0.0",
-  "private": true,
+  "bin": {
+    "messagekit-mcp": "./dist/index.js"
+  },
+  "files": [
+    "dist"
+  ],
   "type": "module",
+  "main": "./dist/index.js",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
   "exports": {
-    ".": "./src/index.ts"
+    ".": {
+      "import": "./dist/index.js",
+      "types": "./dist/index.d.ts"
+    }
+  },
+  "publishConfig": {
+    "access": "public"
   },
   "scripts": {
-    "build": "tsdown"
+    "build": "tsdown",
+    "pack:dry": "bun run build && bun pm pack --dry-run",
+    "prepublishOnly": "bun run build"
   },
   "dependencies": {
-    "@munnamodi-dev/core": "workspace:*",
     "@modelcontextprotocol/server": "^2.0.0",
+    "@munnamodi-dev/core": "workspace:*",
     "zod": "^4.4.3"
   }
 }

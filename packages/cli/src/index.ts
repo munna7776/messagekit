@@ -1,3 +1,4 @@
+#!/usr/bin/env node
 import { Command } from "commander";
 import { z, ZodError } from "zod";
 import { dirname, join } from "node:path";
@@ -13,13 +14,9 @@ const configPath = join(homedir(), ".config", "messagekit", "config.json");
 
 function writeTelegramBotToken(telegramBotToken: string) {
   mkdirSync(dirname(configPath), { recursive: true });
-  writeFileSync(
-    configPath,
-    `${JSON.stringify({ telegramBotToken }, null, 2)}\n`,
-    {
-      mode: 0o600,
-    },
-  );
+  writeFileSync(configPath, `${JSON.stringify({ telegramBotToken }, null, 2)}\n`, {
+    mode: 0o600,
+  });
 }
 
 function getTelegramBotToken() {
@@ -27,9 +24,7 @@ function getTelegramBotToken() {
     throw new Error("Telegram bot token is required. Run `messagekit init`");
   }
 
-  const config = cliConfigSchema.parse(
-    JSON.parse(readFileSync(configPath, "utf-8")),
-  );
+  const config = cliConfigSchema.parse(JSON.parse(readFileSync(configPath, "utf-8")));
 
   const token = config.telegramBotToken;
   if (!token) {
