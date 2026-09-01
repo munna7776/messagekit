@@ -1,6 +1,7 @@
+#!/usr/bin/env node
 import { McpServer } from "@modelcontextprotocol/server";
 import { StdioServerTransport } from "@modelcontextprotocol/server/stdio";
-import { telegramMessageInputSchema, sendTelegramMessage } from "@messagekit/core";
+import { telegramMessageInputSchema, sendTelegramMessage } from "@munnamodi-dev/core";
 
 const server = new McpServer({ name: "messagekit", version: "0.0.0" });
 

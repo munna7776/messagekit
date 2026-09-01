@@ -1,9 +1,10 @@
+#!/usr/bin/env node
 import { Command } from "commander";
 import { z, ZodError } from "zod";
 import { dirname, join } from "node:path";
 import { homedir } from "node:os";
 import { existsSync, mkdirSync, readFileSync, writeFileSync } from "node:fs";
-import { sendTelegramMessage } from "@messagekit/core";
+import { sendTelegramMessage } from "@munnamodi-dev/core";
 
 const cliConfigSchema = z.object({
   telegramBotToken: z.string().min(1).optional(),
