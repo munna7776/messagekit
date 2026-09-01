@@ -24,8 +24,11 @@
       },
     },
     "packages/cli": {
-      "name": "@munnamodi-dev/cli",
-      "version": "0.0.0",
+      "name": "@munnamodi-dev/messagekit",
+      "version": "0.0.2",
+      "bin": {
+        "messagekit": "./dist/index.js",
+      },
       "dependencies": {
         "@munnamodi-dev/core": "workspace:*",
         "commander": "^15.0.0",
@@ -34,7 +37,7 @@
     },
     "packages/core": {
       "name": "@munnamodi-dev/core",
-      "version": "0.0.0",
+      "version": "0.0.1",
       "dependencies": {
         "zod": "^4.4.3",
       },
@@ -43,8 +46,11 @@
       },
     },
     "packages/local-mcp": {
-      "name": "@munnamodi-dev/local-mcp",
-      "version": "0.0.0",
+      "name": "@munnamodi-dev/messagekit-mcp",
+      "version": "0.0.1",
+      "bin": {
+        "messagekit-mcp": "./dist/index.js",
+      },
       "dependencies": {
         "@modelcontextprotocol/server": "^2.0.0",
         "@munnamodi-dev/core": "workspace:*",
@@ -69,11 +75,11 @@
 
     "@modelcontextprotocol/server": ["@modelcontextprotocol/server@2.0.0", "", { "dependencies": { "@modelcontextprotocol/core": "2.0.0", "zod": "^4.2.0" } }, "sha512-YhHWdHfpFMQfd0prsEnxKeS3Qz3ytIGmsS0sth4KDjnacIT7hxk6hXHkJ9KysxlkvTM+WZAtQbbcUhdoP4Hvtw=="],
 
-    "@munnamodi-dev/cli": ["@munnamodi-dev/cli@workspace:packages/cli"],
-
     "@munnamodi-dev/core": ["@munnamodi-dev/core@workspace:packages/core"],
 
-    "@munnamodi-dev/local-mcp": ["@munnamodi-dev/local-mcp@workspace:packages/local-mcp"],
+    "@munnamodi-dev/messagekit": ["@munnamodi-dev/messagekit@workspace:packages/cli"],
+
+    "@munnamodi-dev/messagekit-mcp": ["@munnamodi-dev/messagekit-mcp@workspace:packages/local-mcp"],
 
     "@oxc-project/types": ["@oxc-project/types@0.146.0", "", {}, "sha512-XC0QsnnhVe7sLIWmYmdPw7x5P0h4W8vUU3Nv1ySgWXtvCz8NizoAEpGXA0sOYoJQV2Rl13LgURAHQ5cI5ILCSA=="],
 
